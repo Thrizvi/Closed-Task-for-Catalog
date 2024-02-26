@@ -1,0 +1,83 @@
+var op = new GlideRecord('sc_task');
+op.addQuery('number','SCTASK0632747');
+op.query();
+if(op.next()){
+
+    var data = op.variables.task_set;
+    var idracnon = op.variables.task_set_2.toString();
+    var idracpar = JSON.parse(idracnon);
+    //gs.print(idracpar[0].ts_ip_address.toString());
+    // var idracnonaci =  JSON.stringify(idracpar);
+    var oobnon = op.variables.task_set_3.toString();
+    var oobnonpar = JSON.parse(oobnon);
+    //gs.print(oobnon[0].ta_ip_address);
+     //var oobnonaci =  JSON.stringify(oobnonpar);
+    var network = op.variables.network1;
+    var ACIType1 = JSON.parse(network);
+    var ACIType = JSON.stringify(ACIType1);
+    //gs.print(ACIType);
+    var data1 = JSON.parse(data);
+    //var network = current.variables.network1.toString();
+    //var ACIType1 = JSON.parse(network);
+    //var ACIType = JSON.stringify(ACIType1);
+    //gs.addErrorMessage('value ' + JSON.stringify(ACIType));
+    //gs.addErrorMessage('Inside if');
+    //gs.print(ACIType1.length); //var dataValue = jsonArray[i].type;
+    //gs.print('OOB '+ oobnonaci);
+    //gs.print('IDRAC '+idracnonaci);
+    //var jsonArray = JSON.parse(idracnonaci);
+    //var jsonArray2 = JSON.parse(oobnonaci);
+    //gs.print(data1.length);
+
+
+    for(var t = 0; t<data1.length;t++){
+        
+        //gs.print('1');
+       var netcountdata = 0;
+
+        for (var i = 0; i < data1.length; i++) {
+            netcountdata++;
+        }
+
+        if (netcountdata > 0) {
+            var acicountdata = 0;
+
+            
+
+                if (data1[t].tk_ip_address == undefined) {
+                    gs.addErrorMessage('Please fill the Data IP Address of ACI/NON-ACI details for Data before submission');
+                    acicountdata++;  
+                    break;
+                     
+                }
+           
+            
+           // gs.print(netcountdata+' '+acicountdata);
+            
+        }
+    }
+    gs.print(ACIType1)
+    for(var j = 0; j<ACIType1.length;j++){
+     
+    var dataValue = ACIType1[j].type;
+    //gs.print(dataValue);
+
+
+        if (dataValue == 'idrac') {
+       
+        if (idracpar[0].ts_ip_address.toString() == undefined) {
+            gs.addErrorMessage('Please fill the IP Address of NON-ACI details for IDRAC before submission');
+			//current.setAbortAction(true);
+           
+        }
+    } else if (dataValue == 'oob') {
+        //gs.print('3');
+        //gs.print(oobnonpar[0].ta_ip_address.toString());
+        if (oobnonpar[0].ta_ip_address.toString() == undefined) {
+            gs.addErrorMessage('Please fill the IP Address of NON-ACI details for OOB before submission');
+			//current.setAbortAction(true);
+            
+        }
+    }
+}
+}
